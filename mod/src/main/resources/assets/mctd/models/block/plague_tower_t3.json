@@ -1,0 +1,11 @@
+{
+  "parent": "mctd:block/tower_t3",
+  "textures": {
+    "base": "minecraft:block/polished_deepslate",
+    "shaft": "minecraft:block/obsidian",
+    "head": "minecraft:block/flowering_azalea_leaves",
+    "crystal": "minecraft:block/emerald_block",
+    "accent": "minecraft:block/gold_block",
+    "particle": "minecraft:block/obsidian"
+  }
+}

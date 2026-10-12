@@ -1,0 +1,11 @@
+{
+  "parent": "mctd:block/tower_t2",
+  "textures": {
+    "base": "minecraft:block/cobblestone",
+    "shaft": "minecraft:block/smooth_stone",
+    "head": "minecraft:block/blast_furnace_front",
+    "crystal": "minecraft:block/coal_block",
+    "accent": "minecraft:block/iron_block",
+    "particle": "minecraft:block/smooth_stone"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "mctd",
+  "version": "${version}",
+  "name": "MC Tower Defense",
+  "description": "Element tower defense like the Warcraft 3 classic: 43 towers, six elements, 50 waves with fast, mass, air and boss enemies.",
+  "authors": ["dalpner"],
+  "contact": {
+    "sources": "https://github.com/dalpner/MC_TowerDefense"
+  },
+  "icon": "assets/mctd/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["io.github.dalpner.mctd.MctdMod"],
+    "client": ["io.github.dalpner.mctd.client.MctdClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

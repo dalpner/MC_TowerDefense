@@ -32,6 +32,8 @@ public enum ArenaLayout {
     private final PathLine path;
     private final int[][] startPillars;
     private final int[][] endPillars;
+    private int[][] startWall;
+    private int[][] endWall;
 
     ArenaLayout(String id, int size, int[][] waypoints) {
         this.id = id;
@@ -48,6 +50,29 @@ public enum ArenaLayout {
         this.startPillars = pillars(waypoints[0], waypoints[1]);
         this.endPillars = pillars(waypoints[waypoints.length - 1], waypoints[waypoints.length - 2]);
         buildGrid();
+        this.startWall = wall(waypoints[0], waypoints[1]);
+        this.endWall = wall(waypoints[waypoints.length - 1], waypoints[waypoints.length - 2]);
+    }
+
+    /**
+     * Three cells closing the path behind {@code at} (seen from {@code other}): the back wall of the
+     * spawn portal or of the castle gate. Non-border cells become decoration.
+     */
+    private int[][] wall(int[] at, int[] other) {
+        int dx = Integer.signum(at[0] - other[0]);
+        int dz = Integer.signum(at[1] - other[1]);
+        int k = 1;
+        while (k < 3 && cell(at[0] + dx * k, at[1] + dz * k) == PATH) {
+            k++;
+        }
+        int[][] cells = new int[3][];
+        for (int lat = -1; lat <= 1; lat++) {
+            int x = at[0] + dx * k + lat * -dz;
+            int z = at[1] + dz * k + lat * dx;
+            cells[lat + 1] = new int[]{x, z};
+            markDecor(x, z);
+        }
+        return cells;
     }
 
     /** Two cells beside the path at {@code at}, perpendicular to the direction towards {@code other}. */
@@ -120,6 +145,14 @@ public enum ArenaLayout {
 
     public int[][] endPillars() {
         return endPillars;
+    }
+
+    public int[][] startWall() {
+        return startWall;
+    }
+
+    public int[][] endWall() {
+        return endWall;
     }
 
     public boolean inside(int x, int z) {

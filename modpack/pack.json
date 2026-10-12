@@ -1,0 +1,14 @@
+{
+  "name": "MC Tower Defense",
+  "summary": "Element-Tower-Defense wie in Warcraft 3 – direkt in Minecraft: 43 Türme, 6 Elemente, 50 Wellen.",
+  "minecraft": "1.21.1",
+  "loader": "fabric-loader",
+  "loaderVersion": "latest",
+  "mods": [
+    {"slug": "fabric-api", "client": "required", "server": "required", "required": true},
+    {"slug": "sodium", "client": "required", "server": "unsupported"},
+    {"slug": "lithium", "client": "required", "server": "required"},
+    {"slug": "ferrite-core", "client": "required", "server": "required"},
+    {"slug": "modmenu", "client": "required", "server": "unsupported"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "parent": "mctd:block/tower_t1",
+  "textures": {
+    "base": "minecraft:block/polished_deepslate",
+    "shaft": "minecraft:block/quartz_pillar",
+    "head": "minecraft:block/dripstone_block",
+    "crystal": "minecraft:block/raw_gold_block",
+    "accent": "minecraft:block/stone",
+    "particle": "minecraft:block/quartz_pillar"
+  }
+}
