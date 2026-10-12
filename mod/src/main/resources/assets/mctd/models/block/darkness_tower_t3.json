@@ -1,0 +1,11 @@
+{
+  "parent": "mctd:block/tower_t3",
+  "textures": {
+    "base": "minecraft:block/stone_bricks",
+    "shaft": "minecraft:block/obsidian",
+    "head": "minecraft:block/crying_obsidian",
+    "crystal": "minecraft:block/amethyst_block",
+    "accent": "minecraft:block/gold_block",
+    "particle": "minecraft:block/obsidian"
+  }
+}

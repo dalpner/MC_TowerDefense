@@ -1,0 +1,21 @@
+# Gradle / build output
+.gradle/
+build/
+out/
+run/
+*.class
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Modpack build output
+dist/

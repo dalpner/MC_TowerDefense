@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "tier=1": {
+      "model": "mctd:block/ice_tower_t1"
+    },
+    "tier=2": {
+      "model": "mctd:block/ice_tower_t2"
+    },
+    "tier=3": {
+      "model": "mctd:block/ice_tower_t3"
+    }
+  }
+}

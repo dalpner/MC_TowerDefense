@@ -1,0 +1,11 @@
+{
+  "parent": "mctd:block/tower_t1",
+  "textures": {
+    "base": "minecraft:block/polished_blackstone_bricks",
+    "shaft": "minecraft:block/quartz_pillar",
+    "head": "minecraft:block/dark_prismarine",
+    "crystal": "minecraft:block/shroomlight",
+    "accent": "minecraft:block/stone",
+    "particle": "minecraft:block/quartz_pillar"
+  }
+}

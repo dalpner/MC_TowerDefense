@@ -1,0 +1,11 @@
+{
+  "parent": "mctd:block/tower_t3",
+  "textures": {
+    "base": "minecraft:block/polished_deepslate",
+    "shaft": "minecraft:block/oak_log",
+    "head": "minecraft:block/dripstone_block",
+    "crystal": "minecraft:block/raw_gold_block",
+    "accent": "minecraft:block/gold_block",
+    "particle": "minecraft:block/oak_log"
+  }
+}

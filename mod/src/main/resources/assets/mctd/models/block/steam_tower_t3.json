@@ -1,0 +1,11 @@
+{
+  "parent": "mctd:block/tower_t3",
+  "textures": {
+    "base": "minecraft:block/polished_deepslate",
+    "shaft": "minecraft:block/prismarine_bricks",
+    "head": "minecraft:block/magma",
+    "crystal": "minecraft:block/shroomlight",
+    "accent": "minecraft:block/gold_block",
+    "particle": "minecraft:block/prismarine_bricks"
+  }
+}

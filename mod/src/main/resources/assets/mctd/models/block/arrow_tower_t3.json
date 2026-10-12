@@ -1,0 +1,11 @@
+{
+  "parent": "mctd:block/tower_t3",
+  "textures": {
+    "base": "minecraft:block/cobblestone",
+    "shaft": "minecraft:block/oak_planks",
+    "head": "minecraft:block/dispenser_front",
+    "crystal": "minecraft:block/target_side",
+    "accent": "minecraft:block/gold_block",
+    "particle": "minecraft:block/oak_planks"
+  }
+}
