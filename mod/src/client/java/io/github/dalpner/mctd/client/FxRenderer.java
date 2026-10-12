@@ -27,8 +27,14 @@ public final class FxRenderer {
     private static final Map<String, Long> SOUND_COOLDOWN = new HashMap<>();
     private static int soundsThisBatch;
     private static double density = 1.0;
+    private static int entriesPlayed;
 
     private FxRenderer() {
+    }
+
+    /** Number of effects shown since the game started. */
+    static int entriesPlayed() {
+        return entriesPlayed;
     }
 
     static void play(FxPayload payload) {
@@ -37,6 +43,7 @@ public final class FxRenderer {
         if (world == null) {
             return;
         }
+        entriesPlayed += payload.entries().size();
         ParticlesMode mode = client.options.getParticles().getValue();
         density = mode == ParticlesMode.ALL ? 1.0 : mode == ParticlesMode.DECREASED ? 0.5 : 0.2;
         soundsThisBatch = 0;

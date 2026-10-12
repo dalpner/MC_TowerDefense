@@ -14,6 +14,7 @@
     "main": ["io.github.dalpner.mctd.MctdMod"],
     "client": ["io.github.dalpner.mctd.client.MctdClient"]
   },
+  "mixins": ["mctd.mixins.json"],
   "depends": {
     "fabricloader": ">=0.16.0",
     "minecraft": "1.21.1",

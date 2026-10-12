@@ -299,9 +299,18 @@ python3 tools/gen_assets.py
 ```
 
 GitHub Actions (`.github/workflows/build.yml`) macht genau das bei jedem Push und stellt `.mrpack`,
-Server-Zip und Mod-Jar als Artefakt bereit. Vorher startet es einen echten Minecraft-Server mit der Mod,
-der ohne Spieler eine Arena baut, Türme setzt und die ersten Wellen spielt (`./gradlew runSmokeTest`) –
-nur wenn dieser Rauchtest besteht, wird das Modpack gebaut. Ein Tag `v*` erzeugt zusätzlich ein Release.
+Server-Zip und Mod-Jar als Artefakt bereit. Vorher laufen automatische Tests im echten Spiel:
+
+- **Server-Rauchtest** (`./gradlew runSmokeTest`): Ein Minecraft-Server mit der Mod baut ohne Spieler eine
+  Arena, setzt Türme und spielt die ersten Wellen.
+- **Client-Test** (`./gradlew runClientTest`, in CI ohne Bildschirm über `xvfb-run`): Das Spiel legt wie
+  ein Spieler eine Einzelspielerwelt an, startet über die Lobby eine Partie, baut Türme mit dem Baustab,
+  öffnet die Menüs, spielt eine Welle, speichert, lädt die Welt neu und verlässt die Partie. Dabei prüft
+  es Modelle, Texturen und Übersetzungen. Die Screenshots liegen im Artefakt `client-test-screenshots`.
+- **Server-Zip-Test:** Der fertige Server aus dem Modpack (mit Fabric API, Lithium und FerriteCore von
+  Modrinth) spielt dieselbe Partie wie der Rauchtest.
+
+Nur wenn alle Tests bestehen, wird das Modpack hochgeladen. Ein Tag `v*` erzeugt zusätzlich ein Release.
 
 ### Projektstruktur
 
@@ -310,7 +319,8 @@ mod/                         Fabric-Mod (Minecraft 1.21.1, Yarn-Mappings)
   src/main/java/.../core/    Spielkern ohne Minecraft-Abhängigkeit: Elemente, Türme, Wellen, Simulation
   src/main/java/.../game/    Spielsitzungen: Arena, Gegner-Mobs, Speichern, Interaktion
   src/main/java/.../menu/    Truhen-Menüs (Lobby, Hauptmenü, Bauen, Turm, Elemente)
-  src/client/java/           HUD, Partikeleffekte, Reichweitenanzeige
+  src/main/java/.../mixin/   Die Arena-Dimension gilt nicht als „experimentelle Welteinstellung“
+  src/client/java/           HUD, Partikeleffekte, Reichweitenanzeige, automatischer Client-Test
   src/main/resources/        Arena-Dimension, Modelle, Übersetzungen (de/en)
   src/test/java/             Selbsttests und Balance-Simulation (Bot spielt komplette Partien)
 modpack/                     pack.json (Mod-Liste), Overrides, Builder für .mrpack und Server-Zip
