@@ -238,8 +238,14 @@ public final class ClientTest {
                     c -> c.world.getBlockState(tower).getBlock() instanceof TowerBlock, SHORT);
         }
         screenshot("reloaded");
-        if (ClientState.hud().wave() < 1) {
-            problem("the game was not restored (wave " + ClientState.hud().wave() + ")");
+        // creeps are not saved, so the interrupted wave is played again; towers and kills stay
+        IntegratedServer reloaded = onClient(MinecraftClient::getServer);
+        int[] restored = onServer(reloaded, () -> {
+            Session session = SessionManager.byMember(me);
+            return session == null ? new int[]{-1, -1} : new int[]{session.game().towers().size(), session.game().kills()};
+        });
+        if (restored[0] != TOWERS || restored[1] < stats[1]) {
+            problem("the game was not restored (" + restored[0] + " towers, " + restored[1] + " kills)");
         }
 
         // leave the game for good

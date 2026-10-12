@@ -1,7 +1,10 @@
 package io.github.dalpner.mctd.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.serialization.Lifecycle;
 import io.github.dalpner.mctd.MctdMod;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.dimension.DimensionOptionsRegistryHolder;
@@ -24,5 +27,18 @@ public abstract class DimensionOptionsRegistryHolderMixin {
         if (key.getValue().getNamespace().equals(MctdMod.MOD_ID)) {
             cir.setReturnValue(Lifecycle.stable());
         }
+    }
+
+    /** The whole dimension list is experimental when it has more entries than the vanilla ones; the arena doesn't count. */
+    @ModifyExpressionValue(method = "toConfig", at = @At(value = "FIELD",
+            target = "Lnet/minecraft/world/dimension/DimensionOptionsRegistryHolder;VANILLA_KEY_COUNT:I"))
+    private int mctd$countArena(int vanillaCount, @Local(argsOnly = true) Registry<DimensionOptions> existing) {
+        int arenas = 0;
+        for (RegistryKey<DimensionOptions> key : existing.getKeys()) {
+            if (key.getValue().getNamespace().equals(MctdMod.MOD_ID)) {
+                arenas++;
+            }
+        }
+        return vanillaCount + arenas;
     }
 }
