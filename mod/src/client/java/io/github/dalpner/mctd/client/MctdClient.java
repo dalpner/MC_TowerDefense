@@ -26,5 +26,6 @@ public class MctdClient implements ClientModInitializer {
         HudRenderCallback.EVENT.register((drawContext, tickCounter) -> HudOverlay.render(drawContext));
         ClientTickEvents.END_CLIENT_TICK.register(TowerPreview::tick);
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ClientState.reset());
+        ClientTest.register();
     }
 }

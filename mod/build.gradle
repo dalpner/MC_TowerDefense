@@ -30,6 +30,12 @@ loom {
             runDir "build/smoketest"
             vmArg "-Dmctd.smoketest=true"
         }
+        // ./gradlew runClientTest: client that plays through the mod on its own (see ClientTest.java)
+        clientTest {
+            client()
+            runDir "build/clienttest"
+            vmArg "-Dmctd.clienttest=true"
+        }
     }
 }
 

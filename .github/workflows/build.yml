@@ -38,11 +38,42 @@ jobs:
           ./gradlew runSmokeTest --stacktrace 2>&1 | tee smoketest.log
           grep -q "\[SmokeTest\] PASSED" smoketest.log
 
+      - name: Client test (headless, software rendering)
+        working-directory: mod
+        timeout-minutes: 25
+        run: |
+          set -o pipefail
+          if ! command -v xvfb-run > /dev/null; then sudo apt-get update && sudo apt-get install -y xvfb; fi
+          mkdir -p build/clienttest
+          printf 'version:3955\nlang:de_de\nonboardAccessibility:false\npauseOnLostFocus:false\ntutorialStep:none\nrenderDistance:6\nsimulationDistance:6\nnarrator:0\n' > build/clienttest/options.txt
+          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClientTest --stacktrace 2>&1 | tee clienttest.log
+          grep -q "\[ClientTest\] PASSED" clienttest.log
+
+      - name: Upload client test screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-test-screenshots
+          path: mod/build/clienttest/screenshots/
+          if-no-files-found: ignore
+
       - name: Build the modpack
         run: |
           JAR=$(ls mod/build/libs/mctd-*.jar | grep -v -- '-sources' | head -n 1)
           python3 modpack/build_mrpack.py --mod-jar "$JAR" --out dist --server-zip
           cp "$JAR" dist/
+
+      - name: Smoke test the server zip (production jars from the modpack)
+        timeout-minutes: 15
+        run: |
+          set -o pipefail
+          mkdir prodtest
+          cd prodtest
+          unzip -q ../dist/MC-Tower-Defense-Server-*.zip
+          echo "eula=true" > eula.txt
+          printf 'online-mode=false\nlevel-type=minecraft\\:flat\ngenerate-structures=false\nmax-tick-time=-1\n' > server.properties
+          java -Xmx2G -Dmctd.smoketest=true -jar fabric-server-launch.jar nogui 2>&1 | tee ../prodtest.log
+          grep -q "\[SmokeTest\] PASSED" ../prodtest.log
 
       - uses: actions/upload-artifact@v4
         with:
