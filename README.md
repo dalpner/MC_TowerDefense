@@ -11,7 +11,9 @@ und Boss-Gegnern, Element-Essenzen und Elementar-Wächter.
 
 ## Inhalt
 
-- [Installation](#installation)
+- [So nutzt du das Modpack](#so-nutzt-du-das-modpack)
+- [Mit Freunden spielen](#mit-freunden-spielen)
+- [Häufige Fragen](#häufige-fragen)
 - [So spielst du](#so-spielst-du)
 - [Elemente](#elemente)
 - [Gegner](#gegner)
@@ -19,22 +21,98 @@ und Boss-Gegnern, Element-Essenzen und Elementar-Wächter.
 - [Befehle](#befehle)
 - [Aus dem Quellcode bauen](#aus-dem-quellcode-bauen)
 
-## Installation
+## So nutzt du das Modpack
 
-1. **Modpack herunterladen:** Die Datei `MC-Tower-Defense-<version>.mrpack` entsteht bei jedem Build in
-   GitHub Actions (Tab *Actions* → neuester Lauf → Artefakt `mc-tower-defense`). Wird ein Tag `v*`
-   gepusht, landet sie zusätzlich unter *Releases*.
-2. **In den Launcher importieren**
-   - **Prism Launcher:** *Instanz hinzufügen* → *Importieren* → `.mrpack` auswählen.
-   - **Modrinth App:** *+* → *Aus Datei importieren* → `.mrpack` auswählen.
-   - Der Launcher lädt Minecraft 1.21.1, Fabric und alle Mods automatisch. Die CurseForge-App kann
-     `.mrpack` nicht importieren.
-3. Instanz starten, **neue Welt erstellen** (Typ und Spielmodus egal) – fertig. Die Spielsprache ist im
-   Pack auf Deutsch voreingestellt.
+### Was du brauchst
 
-**Server für Freunde:** Das Build-Artefakt enthält zusätzlich `MC-Tower-Defense-Server-<version>.zip`
-(Fabric-Server mit allen nötigen Mods). Entpacken, `eula.txt` auf `true` setzen, `start.bat` bzw.
-`start.sh` ausführen. Alle Spieler brauchen das Modpack.
+- **Minecraft Java Edition** (gekauft, mit Microsoft-Konto).
+- Einen Launcher, der Modrinth-Modpacks (`.mrpack`) importieren kann:
+  **[Prism Launcher](https://prismlauncher.org)** (empfohlen, Windows/macOS/Linux) oder die
+  **[Modrinth App](https://modrinth.com/app)**. Beide laden Java 21, Minecraft, Fabric und alle Mods selbst
+  herunter – du musst nichts von Hand installieren.
+- Etwa 4 GB freien Arbeitsspeicher für Minecraft.
+
+### Schritt 1: Modpack-Datei herunterladen
+
+Gebaut wird das Modpack automatisch von GitHub Actions bei jedem Push.
+
+- **Aus einem Release (am einfachsten):** Auf der GitHub-Seite des Projekts rechts auf **Releases**
+  klicken und bei der neuesten Version `MC-Tower-Defense-<version>.mrpack` herunterladen. Ein Release
+  entsteht, sobald ein Versions-Tag wie `v1.0.0` gepusht wird.
+- **Aus dem neuesten Build:** Oben auf den Tab **Actions** → links *Build mod and modpack* → den obersten
+  Lauf mit grünem Haken öffnen → ganz unten unter **Artifacts** auf `mc-tower-defense` klicken (dafür
+  musst du bei GitHub angemeldet sein). Die heruntergeladene ZIP-Datei entpacken – darin liegt
+  `MC-Tower-Defense-<version>.mrpack`. Artefakte werden 90 Tage aufbewahrt.
+
+### Schritt 2: In den Launcher importieren
+
+**Prism Launcher**
+
+1. Prism Launcher installieren und starten, oben rechts unter *Konten* dein Microsoft-Konto hinzufügen.
+2. **Instanz hinzufügen** → links **Importieren** → die `.mrpack`-Datei auswählen → **OK**.
+3. Empfohlen: Instanz anklicken → **Bearbeiten** → *Einstellungen* → *Java* → Haken bei *Speicher* und
+   *Maximaler Speicherverbrauch* auf **4096 MiB** setzen.
+4. Instanz doppelklicken. Beim ersten Start werden Minecraft 1.21.1, Fabric und alle Mods geladen –
+   das dauert ein paar Minuten.
+
+**Modrinth App**
+
+1. Modrinth App installieren und mit deinem Microsoft-Konto anmelden.
+2. Auf **+** (*Create instance*) klicken → **From file** / *Import* wählen → die `.mrpack`-Datei auswählen.
+3. Die neue Instanz unter *Library* starten (**Play**).
+
+Die CurseForge-App kann `.mrpack`-Dateien nicht importieren.
+
+### Schritt 3: Spielen
+
+1. Im Hauptmenü **Einzelspieler** → **Neue Welt erstellen** (Welttyp und Spielmodus sind egal) →
+   **Neue Welt erstellen**.
+2. Sobald du in der Welt bist, erscheint im Chat **[Spiel starten]** – anklicken (oder `/td lobby`
+   eingeben).
+3. In der Lobby eine **Karte** (Zeile) und eine **Schwierigkeit** anklicken. Du wirst in deine eigene
+   Arena gebracht und bekommst den **Baustab**. Wie es weitergeht, steht unter
+   [So spielst du](#so-spielst-du).
+
+Die Spielsprache ist im Modpack auf Deutsch voreingestellt (änderbar unter *Optionen* → *Sprache*).
+Deine Partie wird mit der Welt gespeichert: Welt verlassen, später wieder betreten, und das Spiel geht
+weiter (eine angefangene Welle startet dann neu).
+
+### Updates
+
+Für eine neue Version die neue `.mrpack` herunterladen und wie oben als neue Instanz importieren. Deine
+Welten nimmst du mit, indem du den Ordner `saves` aus der alten Instanz in die neue kopierst
+(Prism: Instanz anklicken → *Ordner*).
+
+## Mit Freunden spielen
+
+Alle Mitspieler brauchen **dieselbe Version** des Modpacks. Im Koop teilt ihr euch Gold, Leben und
+Elemente.
+
+- **Im selben Netzwerk (LAN):** Einer startet eine Welt, öffnet das Pausenmenü und wählt **Im LAN öffnen**.
+  Die anderen finden die Welt unter **Mehrspieler**. Danach entweder in der Lobby
+  *Spiel von … beitreten* anklicken oder `/td join <Spielername>` eingeben.
+- **Über das Internet:** Im Download liegt zusätzlich `MC-Tower-Defense-Server-<version>.zip` – ein
+  fertiger Fabric-Server mit allen nötigen Mods.
+  1. Auf dem Server-PC [Java 21](https://adoptium.net) installieren und die ZIP-Datei entpacken.
+  2. In `eula.txt` den Wert auf `eula=true` setzen (nachdem du die Minecraft-EULA gelesen hast).
+  3. `start.bat` (Windows) bzw. `start.sh` (Linux/macOS) ausführen. Beim ersten Start lädt der
+     Fabric-Launcher den Minecraft-Server automatisch.
+  4. Port **25565** im Router freigeben. Mitspieler verbinden sich über **Mehrspieler** →
+     **Server hinzufügen** mit deiner IP-Adresse.
+
+## Häufige Fragen
+
+- **Mein Launcher kann die Datei nicht öffnen.** Nur Launcher mit Modrinth-Unterstützung (Prism Launcher,
+  Modrinth App, ATLauncher) können `.mrpack` importieren, die CurseForge-App nicht.
+- **Ich kann in der Arena keine Blöcke abbauen oder setzen.** Das ist Absicht: In der Arena bist du im
+  Abenteuermodus. Türme baust du mit dem Baustab; außerhalb der Arena gilt wieder dein normaler
+  Spielmodus.
+- **Ich habe den Baustab verloren.** Einfach `/td return` eingeben oder die Arena neu betreten – du
+  bekommst ihn automatisch zurück.
+- **Die Schwierigkeit hat sich auf „Leicht“ geändert.** Auf „Friedlich“ würden die Gegner sofort
+  verschwinden, deshalb stellt die Mod beim Spielstart automatisch auf „Leicht“ um.
+- **Das Spiel ruckelt.** Sodium ist bereits enthalten. Hilft das nicht, unter *Optionen* →
+  *Grafikeinstellungen* die *Partikel* auf *Verringert* stellen.
 
 ## So spielst du
 
