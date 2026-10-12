@@ -37,8 +37,7 @@ und Boss-Gegnern, Element-Essenzen und Elementar-Wächter.
 Gebaut wird das Modpack automatisch von GitHub Actions bei jedem Push.
 
 - **Aus einem Release (am einfachsten):** Auf der GitHub-Seite des Projekts rechts auf **Releases**
-  klicken und bei der neuesten Version `MC-Tower-Defense-<version>.mrpack` herunterladen. Ein Release
-  entsteht, sobald ein Versions-Tag wie `v1.0.0` gepusht wird.
+  klicken und bei der neuesten Version `MC-Tower-Defense-<version>.mrpack` herunterladen.
 - **Aus dem neuesten Build:** Oben auf den Tab **Actions** → links *Build mod and modpack* → den obersten
   Lauf mit grünem Haken öffnen → ganz unten unter **Artifacts** auf `mc-tower-defense` klicken (dafür
   musst du bei GitHub angemeldet sein). Die heruntergeladene ZIP-Datei entpacken – darin liegt
@@ -310,7 +309,12 @@ Server-Zip und Mod-Jar als Artefakt bereit. Vorher laufen automatische Tests im 
 - **Server-Zip-Test:** Der fertige Server aus dem Modpack (mit Fabric API, Lithium und FerriteCore von
   Modrinth) spielt dieselbe Partie wie der Rauchtest.
 
-Nur wenn alle Tests bestehen, wird das Modpack hochgeladen. Ein Tag `v*` erzeugt zusätzlich ein Release.
+Nur wenn alle Tests bestehen, wird das Modpack hochgeladen.
+
+**Neues Release veröffentlichen:** Zuerst `mod_version` in `mod/gradle.properties` erhöhen (die Version steckt
+in den Dateinamen). Dann auf GitHub **Actions** → *Build mod and modpack* → **Run workflow** → bei „Als
+Release veröffentlichen …“ die Version eintragen (z. B. `v1.1.0`) → **Run workflow**. Nach bestandenen Tests
+erscheinen `.mrpack`, Server-Zip und Mod-Jar unter **Releases**. Ein gepushter Tag `v*` macht dasselbe.
 
 ### Projektstruktur
 

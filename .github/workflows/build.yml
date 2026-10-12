@@ -6,6 +6,11 @@ on:
     tags: ["v*"]
   pull_request:
   workflow_dispatch:
+    inputs:
+      release:
+        description: "Als Release veröffentlichen mit diesem Versions-Tag, z. B. v1.0.0 (leer lassen = nur bauen)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -81,7 +86,14 @@ jobs:
           path: dist/*
 
       - name: Publish release
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.release != ''
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ inputs.release || github.ref_name }}
+          target_commitish: ${{ github.sha }}
+          name: MC Tower Defense ${{ inputs.release || github.ref_name }}
+          body: |
+            **Spielen:** `MC-Tower-Defense-*.mrpack` herunterladen und in Prism Launcher oder der Modrinth App
+            importieren. **Eigener Server:** `MC-Tower-Defense-Server-*.zip`. Die Schritt-für-Schritt-Anleitung
+            steht in der [README](https://github.com/${{ github.repository }}#readme).
           files: dist/*
