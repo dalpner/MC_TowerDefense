@@ -11,7 +11,9 @@ import io.github.dalpner.mctd.game.SessionManager;
 import io.github.dalpner.mctd.registry.ModBlocks;
 import io.github.dalpner.mctd.registry.ModItems;
 import io.github.dalpner.mctd.world.ArenaDimension;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.MessageScreen;
@@ -158,6 +160,9 @@ public final class ClientTest {
         if (spots.size() < TOWERS) {
             throw new IllegalStateException("only " + spots.size() + " build spots found");
         }
+        // the arena decorates build spots with flowers; they must not get in the way
+        onServer(server, () -> SessionManager.byMember(me).world().setBlockState(spots.get(0).up(),
+                Blocks.POPPY.getDefaultState(), Block.NOTIFY_ALL));
         selectWand();
         for (int i = 0; i < TOWERS; i++) {
             BlockPos floor = spots.get(i);

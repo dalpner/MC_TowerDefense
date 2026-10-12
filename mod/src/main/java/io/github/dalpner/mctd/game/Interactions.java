@@ -67,7 +67,7 @@ public final class Interactions {
         BlockPos target;
         if (pos.getY() == floor) {
             target = pos.up();
-        } else if (pos.getY() == floor + 1 && state.isReplaceable()) {
+        } else if (pos.getY() == floor + 1 && Session.isFree(state)) {
             target = pos;
         } else {
             player.sendMessage(Text.translatable("mctd.result.not_buildable").formatted(Formatting.RED), true);
