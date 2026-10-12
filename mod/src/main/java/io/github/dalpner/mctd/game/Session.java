@@ -27,6 +27,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.PlantBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -767,12 +768,16 @@ public final class Session implements GameListener {
 
     // ================================================================== player actions
 
+    /** A tower can stand here: nothing there, or only grass or flowers, which the arena uses as decoration. */
+    public static boolean isFree(BlockState state) {
+        return state.isAir() || state.isReplaceable() || state.getBlock() instanceof PlantBlock;
+    }
+
     public TdResult build(ServerPlayerEntity player, TowerType type, BlockPos pos) {
         if (!contains(pos) || pos.getY() != origin.getY() + 1) {
             return TdResult.NOT_BUILDABLE;
         }
-        BlockState current = world.getBlockState(pos);
-        if (!current.isAir() && !current.isReplaceable()) {
+        if (!isFree(world.getBlockState(pos))) {
             return TdResult.OCCUPIED;
         }
         if (!world.getEntitiesByClass(PlayerEntity.class, new Box(pos), p -> !p.isSpectator()).isEmpty()) {
