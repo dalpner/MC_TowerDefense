@@ -92,6 +92,7 @@ public final class Session implements GameListener {
     private final Map<Integer, Integer> lastHurt = new HashMap<>();
     private final List<FxPayload.Entry> fx = new ArrayList<>();
     private boolean paused = true;
+    private boolean headless;
     private int age;
 
     Session(MinecraftServer server, ServerWorld world, int slot, BlockPos origin, Game game, UUID owner) {
@@ -151,6 +152,16 @@ public final class Session implements GameListener {
 
     public boolean paused() {
         return paused;
+    }
+
+    /** Keeps the game running without players (used by the automated smoke test). */
+    void setHeadless(boolean headless) {
+        this.headless = headless;
+    }
+
+    /** Number of creep entities currently walking in the arena. */
+    public int bodyCount() {
+        return bodies.size();
     }
 
     public TowerType lastBuilt(UUID player) {
@@ -306,7 +317,7 @@ public final class Session implements GameListener {
     public void tick() {
         age++;
         List<ServerPlayerEntity> present = presentMembers();
-        boolean nowPaused = present.isEmpty();
+        boolean nowPaused = !headless && present.isEmpty();
         if (nowPaused != paused) {
             paused = nowPaused;
             if (!paused && world.getDifficulty() == net.minecraft.world.Difficulty.PEACEFUL) {

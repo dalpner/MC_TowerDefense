@@ -3,6 +3,7 @@ package io.github.dalpner.mctd;
 import io.github.dalpner.mctd.command.TdCommand;
 import io.github.dalpner.mctd.game.Interactions;
 import io.github.dalpner.mctd.game.SessionManager;
+import io.github.dalpner.mctd.game.SmokeTest;
 import io.github.dalpner.mctd.net.FxPayload;
 import io.github.dalpner.mctd.net.HudPayload;
 import io.github.dalpner.mctd.registry.ModBlocks;
@@ -31,6 +32,7 @@ public class MctdMod implements ModInitializer {
         TdCommand.register();
         SessionManager.registerEvents();
         Interactions.register();
+        SmokeTest.register();
         LOGGER.info("MC Tower Defense loaded: {} towers ready", ModBlocks.towers().size());
     }
 }

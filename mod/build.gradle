@@ -22,6 +22,15 @@ loom {
             sourceSet sourceSets.client
         }
     }
+
+    runs {
+        // ./gradlew runSmokeTest: dedicated server that plays a few waves on its own (see SmokeTest.java)
+        smokeTest {
+            server()
+            runDir "build/smoketest"
+            vmArg "-Dmctd.smoketest=true"
+        }
+    }
 }
 
 dependencies {

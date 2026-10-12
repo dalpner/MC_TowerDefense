@@ -44,6 +44,7 @@ public final class SessionManager {
     private static final List<Entity> TO_DISCARD = new ArrayList<>();
     private static MinecraftServer server;
     private static SessionState state;
+    private static int errors;
 
     private SessionManager() {
     }
@@ -67,6 +68,7 @@ public final class SessionManager {
         server = srv;
         SESSIONS.clear();
         BODIES.clear();
+        errors = 0;
         cleanupTeams();
         state = srv.getOverworld().getPersistentStateManager().getOrCreate(SessionState.TYPE, SessionState.NAME);
         ServerWorld arena = ArenaDimension.get(srv);
@@ -119,6 +121,7 @@ public final class SessionManager {
             try {
                 session.tick();
             } catch (RuntimeException e) {
+                errors++;
                 MctdMod.LOGGER.error("Error in tower defense game {}", session.slot(), e);
             }
         }
@@ -249,6 +252,11 @@ public final class SessionManager {
         return null;
     }
 
+    /** Number of exceptions caught while ticking games since the server started. */
+    public static int errorCount() {
+        return errors;
+    }
+
     public static BlockPos originOf(int slot) {
         return new BlockPos(slot * ArenaDimension.SLOT_SPACING, ArenaDimension.FLOOR_Y, 0);
     }
@@ -280,6 +288,22 @@ public final class SessionManager {
         player.sendMessage(Text.translatable("mctd.msg.started", Text.translatable(difficulty.translationKey()),
                 Text.translatable(layout.translationKey())).formatted(Formatting.GREEN), false);
         player.sendMessage(Text.translatable("mctd.msg.tutorial").formatted(Formatting.GRAY), false);
+        return session;
+    }
+
+    /** Creates a game without players that keeps running on its own (used by the smoke test). */
+    static Session startHeadless(MinecraftServer srv, ServerWorld arena, Difficulty difficulty, ArenaLayout layout,
+                                 long seed) {
+        int slot = 0;
+        while (bySlot(slot) != null) {
+            slot++;
+        }
+        BlockPos origin = originOf(slot);
+        ArenaBuilder.build(arena, origin, layout, seed);
+        Game game = new Game(new GameConfig(difficulty, layout, seed, WaveGenerator.DEFAULT_WAVES, true));
+        Session session = new Session(srv, arena, slot, origin, game, UUID.randomUUID());
+        session.setHeadless(true);
+        SESSIONS.add(session);
         return session;
     }
 

@@ -299,7 +299,9 @@ python3 tools/gen_assets.py
 ```
 
 GitHub Actions (`.github/workflows/build.yml`) macht genau das bei jedem Push und stellt `.mrpack`,
-Server-Zip und Mod-Jar als Artefakt bereit. Ein Tag `v*` erzeugt zusätzlich ein Release.
+Server-Zip und Mod-Jar als Artefakt bereit. Vorher startet es einen echten Minecraft-Server mit der Mod,
+der ohne Spieler eine Arena baut, Türme setzt und die ersten Wellen spielt (`./gradlew runSmokeTest`) –
+nur wenn dieser Rauchtest besteht, wird das Modpack gebaut. Ein Tag `v*` erzeugt zusätzlich ein Release.
 
 ### Projektstruktur
 

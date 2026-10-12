@@ -27,6 +27,17 @@ jobs:
         working-directory: mod
         run: ./gradlew build --stacktrace
 
+      - name: Smoke test on a dedicated server
+        working-directory: mod
+        timeout-minutes: 15
+        run: |
+          set -o pipefail
+          mkdir -p build/smoketest
+          echo "eula=true" > build/smoketest/eula.txt
+          printf 'online-mode=false\nlevel-type=minecraft\\:flat\ngenerate-structures=false\nmax-tick-time=-1\n' > build/smoketest/server.properties
+          ./gradlew runSmokeTest --stacktrace 2>&1 | tee smoketest.log
+          grep -q "\[SmokeTest\] PASSED" smoketest.log
+
       - name: Build the modpack
         run: |
           JAR=$(ls mod/build/libs/mctd-*.jar | grep -v -- '-sources' | head -n 1)
