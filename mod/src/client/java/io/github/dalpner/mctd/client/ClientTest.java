@@ -173,6 +173,12 @@ public final class ClientTest {
                     && c.world.getBlockState(tower).getBlock() instanceof TowerBlock, SHORT);
         }
         BlockPos firstTower = spots.get(0).up();
+        Vec3d middle = Vec3d.ofCenter(firstTower);
+        Vec3d center = onServer(server, () -> SessionManager.byMember(me).center());
+        Vec3d side = middle.add(new Vec3d(center.x - middle.x, 0, center.z - middle.z).normalize().multiply(5)).add(0, 1.5, 0);
+        moveTo(server, me, side, (float) Math.toDegrees(Math.atan2(side.x - middle.x, middle.z - side.z)),
+                (float) Math.toDegrees(Math.atan2(side.y + 1.62 - middle.y, 5)));
+        screenshot("towers");
         moveTo(server, me, Vec3d.ofBottomCenter(firstTower.up(2)), 0f, 90f);
         waitFor("the tower preview", c -> TowerPreview.target() != null, SHORT);
         screenshot("tower_preview");
@@ -194,7 +200,10 @@ public final class ClientTest {
                     session.origin().getZ() + size * 1.05);
         });
         moveTo(server, me, overview, 180f, 42f);
-        waitFor("creeps", c -> countCreeps(c) > 0, Duration.ofMinutes(1));
+        waitFor("creeps", c -> {
+            maxCreeps = Math.max(maxCreeps, countCreeps(c));
+            return maxCreeps > 0;
+        }, Duration.ofMinutes(1));
         sleep(Duration.ofSeconds(4));
         screenshot("wave");
         long end = System.nanoTime() + Duration.ofMinutes(2).toNanos();
